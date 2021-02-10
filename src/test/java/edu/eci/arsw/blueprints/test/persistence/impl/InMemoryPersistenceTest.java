@@ -9,7 +9,11 @@ import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
+import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
+
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
@@ -65,9 +69,127 @@ public class InMemoryPersistenceTest {
         catch (BlueprintPersistenceException ex){
             
         }
-                
-        
     }
+        
+        
+        @Test
+        public void foundOutTheCorrectBlueprintGivenTheAuthorAndBlueprint() {
+            BlueprintsPersistence mbp = new InMemoryBlueprintPersistence();
+            Point[] p = {new Point(1,2)};
+            Blueprint jose = new Blueprint("Josecito", "plano1", p);
+            try {
+            	
+				mbp.saveBlueprint(jose);
+			} catch (BlueprintPersistenceException e) {
+				// TODO Auto-generated catch block
+				fail("Impossible to save the Blueprint");
+			}
+            Blueprint bp = null;
+            try {
+				bp = mbp.getBlueprint("Josecito", "plano1");
+			} catch (BlueprintNotFoundException e) {
+				// TODO Auto-generated catch block
+				fail("The Author or Blueprint does not exist");
+			}
+            assertEquals(jose, bp); 
+        }
+        
+        
+        @Test
+        public void shouldFindOutAllTheBlueprintsOfJose() {
+        	BlueprintsPersistence mbp = new InMemoryBlueprintPersistence();
+        	
+        	Point[] p = {new Point(1,2)};
+        	Blueprint jose = new Blueprint("Josecito", "plano1", p);
+        	Blueprint jose2 = new Blueprint("Josecito", "plano2", p);
+        	Blueprint jose3 = new Blueprint("Josecito", "plano3", p);
+        	Set<Blueprint> correct = new HashSet<Blueprint>();
+        	correct.add(jose);
+        	correct.add(jose2);
+        	correct.add(jose3);
+        	try {
+
+        		mbp.saveBlueprint(jose);
+        		mbp.saveBlueprint(jose2);
+        		mbp.saveBlueprint(jose3);
+        	} catch (BlueprintPersistenceException e) {
+        		// TODO Auto-generated catch block
+        		fail("Impossible to save the Blueprint");
+        	}
+        	Set<Blueprint> bp = null;
+        	try {
+        		bp = mbp.getBlueprintsByAuthor("Josecito");
+        	} catch (BlueprintNotFoundException e) {
+        		// TODO Auto-generated catch block
+        		fail("The Author does not exist");
+        	}
+        	assertEquals(correct, bp); 
+        }
+        
+        
+        @Test
+        public void ShouldThrowBlueprintNotFoundExceptionBecauseTheAuthorDoesNotExist() {
+        	BlueprintsPersistence mbp = new InMemoryBlueprintPersistence();
+        	
+        	Point[] p = {new Point(1,2)};
+        	Blueprint jose = new Blueprint("Josecito", "plano1", p);
+        	try {
+        		mbp.saveBlueprint(jose);
+        	} catch (BlueprintPersistenceException e) {
+        		// TODO Auto-generated catch block
+        		fail("Impossible to save the Blueprint");
+        	}
+        	try {
+        		mbp.getBlueprintsByAuthor("Jose");
+        	} catch (BlueprintNotFoundException e) {
+        		// This test should fail, because the author we're looking for does not exist
+        		System.out.println(e.getMessage());
+        		fail("The Author does not exist");
+        	}
+        }
+        
+        @Test
+        public void ShouldThrowBlueprintNotFoundExceptionBecauseTheBlueprintDoesNotExist() {
+        	BlueprintsPersistence mbp = new InMemoryBlueprintPersistence();
+        	
+        	Point[] p = {new Point(1,2)};
+        	Blueprint jose = new Blueprint("Josecito", "plano1", p);
+        	try {
+        		mbp.saveBlueprint(jose);
+        	} catch (BlueprintPersistenceException e) {
+        		// TODO Auto-generated catch block
+        		fail("Impossible to save the Blueprint");
+        	}
+        	try {
+        		mbp.getBlueprint("Josecito", "plano");
+        	} catch (BlueprintNotFoundException e) {
+        		// This test should fail, because the blueprint we're looking for does not exist
+        		System.out.println(e.getMessage());
+        		fail("The blueprint does not exist");
+        	}
+        }
+        
+        
+        @Test
+        public void ShouldThrowBlueprintNotFoundExceptionBecauseTheTupleDoesNotExist() {
+        	BlueprintsPersistence mbp = new InMemoryBlueprintPersistence();
+        	
+        	Point[] p = {new Point(1,2)};
+        	Blueprint jose = new Blueprint("Josecito", "plano1", p);
+        	try {
+        		mbp.saveBlueprint(jose);
+        	} catch (BlueprintPersistenceException e) {
+        		// TODO Auto-generated catch block
+        		fail("Impossible to save the Blueprint");
+        	}
+        	try {
+        		mbp.getBlueprint("alfredo", "alfredo_plano");
+        	} catch (BlueprintNotFoundException e) {
+        		// This test should fail, because the tuple we're looking for does not exist
+        		System.out.println(e.getMessage());
+        		fail("The tuple does not exist");
+        	}
+        }
 
 
     
