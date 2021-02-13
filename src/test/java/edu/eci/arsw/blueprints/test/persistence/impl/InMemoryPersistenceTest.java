@@ -143,8 +143,7 @@ public class InMemoryPersistenceTest {
         		mbp.getBlueprintsByAuthor("Jose");
         	} catch (BlueprintNotFoundException e) {
         		// This test should fail, because the author we're looking for does not exist
-        		System.out.println(e.getMessage());
-        		fail("The Author does not exist");
+        		System.out.println("Exception thrown");
         	}
         }
         
@@ -164,8 +163,7 @@ public class InMemoryPersistenceTest {
         		mbp.getBlueprint("Josecito", "plano");
         	} catch (BlueprintNotFoundException e) {
         		// This test should fail, because the blueprint we're looking for does not exist
-        		System.out.println(e.getMessage());
-        		fail("The blueprint does not exist");
+        		System.out.println("Exception thrown");
         	}
         }
         
@@ -186,11 +184,8 @@ public class InMemoryPersistenceTest {
         		mbp.getBlueprint("alfredo", "alfredo_plano");
         	} catch (BlueprintNotFoundException e) {
         		// This test should fail, because the tuple we're looking for does not exist
-        		System.out.println(e.getMessage());
-        		fail("The tuple does not exist");
+        		System.out.println("Exception thrown");
         	}
         }
-
-
     
 }
