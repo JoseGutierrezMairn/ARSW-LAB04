@@ -103,6 +103,7 @@ public class InMemoryPersistenceTest {
         	Blueprint jose = new Blueprint("Josecito", "plano1", p);
         	Blueprint jose2 = new Blueprint("Josecito", "plano2", p);
         	Blueprint jose3 = new Blueprint("Josecito", "plano3", p);
+        	Blueprint s = new Blueprint("Saenz", "plano4", p);
         	Set<Blueprint> correct = new HashSet<Blueprint>();
         	correct.add(jose);
         	correct.add(jose2);
@@ -112,6 +113,7 @@ public class InMemoryPersistenceTest {
         		mbp.saveBlueprint(jose);
         		mbp.saveBlueprint(jose2);
         		mbp.saveBlueprint(jose3);
+        		mbp.saveBlueprint(s);
         	} catch (BlueprintPersistenceException e) {
         		// TODO Auto-generated catch block
         		fail("Impossible to save the Blueprint");
@@ -186,6 +188,33 @@ public class InMemoryPersistenceTest {
         		// This test should fail, because the tuple we're looking for does not exist
         		System.out.println("Exception thrown");
         	}
+        }
+        
+        
+        
+        
+        @Test
+        public void ShouldShowAllTheBlueprintsStored() {
+        	BlueprintsPersistence mbp = new InMemoryBlueprintPersistence();
+        	Point[] p = {new Point(0,0)};
+        	Blueprint jose = new Blueprint("Saenz", "plano1", p);
+        	Blueprint jose2 = new Blueprint("Josecito", "plano2", p);
+        	Blueprint jose3 = new Blueprint("Josecito", "plano3", p);
+        	Set<Blueprint> correct = new HashSet<Blueprint>();
+        	correct.add(jose);
+        	correct.add(jose2);
+        	correct.add(jose3);
+        	try {
+        		mbp.saveBlueprint(jose);
+        		mbp.saveBlueprint(jose2);
+        		mbp.saveBlueprint(jose3);
+        	} catch (BlueprintPersistenceException e) {
+        		// TODO Auto-generated catch block
+        		fail("Impossible to save the Blueprint");
+        	}
+      
+        	assertEquals(correct, mbp.getAllBlueprints());
+        
         }
     
 }

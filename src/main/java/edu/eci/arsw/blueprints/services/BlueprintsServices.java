@@ -5,6 +5,7 @@
  */
 package edu.eci.arsw.blueprints.services;
 
+import edu.eci.arsw.blueprints.filtros.implementacion.Filtro;
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
@@ -14,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,6 +27,11 @@ public class BlueprintsServices {
    
     @Autowired
     BlueprintsPersistence bpp=null;
+    
+    @Autowired
+    @Qualifier("Redundancia")
+    Filtro fil = null;
+    
     
     public void addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException{
         bpp.saveBlueprint(bp);
@@ -53,6 +60,7 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if the given author doesn't exist
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
+    	System.out.println(fil);
     	return bpp.getBlueprintsByAuthor(author);
         //throw new UnsupportedOperationException("Not supported yet."); 
     }

@@ -16,9 +16,10 @@ public class App {
         BlueprintsServices bs = ac.getBean(BlueprintsServices.class);
         try {
 			bs.addNewBlueprint(new Blueprint("Saenz", "plano1", new Point[] {new Point(1,1)}) );
-			System.out.println(bs.getBlueprintsByAuthor("Saenz"));
-			System.out.println(bs.getAllBlueprints());
-			System.out.println(bs.getBlueprint("Saenz", "plano1"));
+			bs.getBlueprintsByAuthor("Saenz");
+			//System.out.println(bs.getBlueprintsByAuthor("Saenz"));
+			//System.out.println(bs.getAllBlueprints());
+			//System.out.println(bs.getBlueprint("Saenz", "plano1"));
 			
 		} catch (BlueprintPersistenceException e) {
 			// TODO Auto-generated catch block
