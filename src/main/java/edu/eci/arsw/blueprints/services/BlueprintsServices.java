@@ -24,14 +24,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BlueprintsServices {
-   
+	
+	
     @Autowired
     BlueprintsPersistence bpp=null;
     
     @Autowired
     @Qualifier("Redundancia")
-    Filtro fil = null;
+    Filtro r = null;
     
+    @Autowired
+    @Qualifier("Muestreo")
+    Filtro m = null;
     
     public void addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException{
         bpp.saveBlueprint(bp);
@@ -60,7 +64,7 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if the given author doesn't exist
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
-    	System.out.println(fil);
+    	
     	return bpp.getBlueprintsByAuthor(author);
         //throw new UnsupportedOperationException("Not supported yet."); 
     }
