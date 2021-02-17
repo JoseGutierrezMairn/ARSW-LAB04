@@ -27,15 +27,19 @@ public class BlueprintsServices {
 	
 	
     @Autowired
+    @Qualifier("InMemoryBlueprintPersistence")
     BlueprintsPersistence bpp=null;
     
-    @Autowired
-    @Qualifier("Redundancia")
-    Filtro r = null;
-    
+    // Para usar el filtro de muestreo cambiar el parámetro de la etiqueta Qualifier a "Muestreo"
+    // Para usar el filtro de Redundancia cambiar el parámetro de la etiqueta Quealifier a "Redundancia"
     @Autowired
     @Qualifier("Muestreo")
-    Filtro m = null;
+    Filtro r = null;
+    
+    //@Autowired
+    //@Qualifier("Muestreo")
+    //Filtro m = null;
+    
     
     public void addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException{
         bpp.saveBlueprint(bp);
@@ -53,7 +57,7 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if there is no such blueprint
      */
     public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
-    	return bpp.getBlueprint(author, name);
+    	return r.filtrar(bpp.getBlueprint(author, name));
         //throw new UnsupportedOperationException("Not supported yet."); 
     }
     
@@ -64,9 +68,14 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if the given author doesn't exist
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
-    	
-    	return bpp.getBlueprintsByAuthor(author);
+    	Set<Blueprint> conF = bpp.getBlueprintsByAuthor(author);
+    	for (Blueprint bp : conF) {
+    		bp = r.filtrar(bp);
+    	}
+        return conF;
         //throw new UnsupportedOperationException("Not supported yet."); 
     }
     
+    
+   
 }

@@ -21,13 +21,15 @@ public class FiltroSubmuestreo implements Filtro{
 		boolean delete = false;
 		for (int i = 0; i < points.size(); i++) {
 			if(delete) {
-				temp.add(points.get(i));
+				delete = false;
 			}else {
+				temp.add(points.get(i));
 				delete = true;
 			}
 		}
 		Point[] p = new Point[temp.size()];
 		p = temp.toArray(p);
+		
 		return new Blueprint(bp.getAuthor(), bp.getName(), p);
 	}
 

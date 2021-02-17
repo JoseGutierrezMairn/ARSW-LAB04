@@ -13,6 +13,7 @@ import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,20 +21,22 @@ import org.springframework.stereotype.Service;
  * @author hcadavid
  */
 @Service
+@Qualifier("InMemoryBlueprintPersistence")
 public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
     private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
 
-    public InMemoryBlueprintPersistence() {
+    //public InMemoryBlueprintPersistence() {
         //load stub data
         //Point[] pts=new Point[]{new Point(140, 140),new Point(115, 115)};
         //Blueprint bp=new Blueprint("_authorname_", "_bpname_ ",pts);
         //blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
         
-    }    
+    //}    
 
     @Override
     public void saveBlueprint(Blueprint bp) throws BlueprintPersistenceException {
+
         if (blueprints.containsKey(new Tuple<>(bp.getAuthor(),bp.getName()))){
             throw new BlueprintPersistenceException("The given blueprint already exists: "+bp);
         }

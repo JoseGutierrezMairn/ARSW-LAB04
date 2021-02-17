@@ -11,8 +11,11 @@ import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
+import edu.eci.arsw.blueprints.services.BlueprintsServices;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +28,7 @@ import static org.junit.Assert.*;
  */
 public class InMemoryPersistenceTest {
     
+	//Estas pruebas NO se les aplica el filtro, pues usan directamente la clase InMemoryBluePrintPersistence
     @Test
     public void saveNewAndLoadTest() throws BlueprintPersistenceException, BlueprintNotFoundException{
         InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();

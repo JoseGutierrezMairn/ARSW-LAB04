@@ -19,7 +19,7 @@ public class FiltroRedundancia implements Filtro {
 		List<Point> filtrado = new ArrayList<Point>();
 		Point anterior = null;
 		for(Point p : points) {
-			if(anterior != null && (p.getX() != anterior.getX() || p.getY() != anterior.getY())){
+			if((anterior == null)|| (anterior != null && (p.getX() != anterior.getX() || p.getY() != anterior.getY()))){
 				filtrado.add(p);
 			}
 			anterior = p;
